@@ -1,0 +1,53 @@
+0. Symbols
+===     the goal
+!!!     point need to consider in order to achieve the goal
+.       point
+-       steps
++       sub steps
+*       smaller steps
+!!      watch out!
+#       notes
+
+1. Testing
+1.1. Testing 101
+. setUp function in TestCase will run before every test -> use it to init some fields, objects that needed in multiple
+    test case so we don't have to repeat code
+
+1.2. unittest.mock patch
+- Using patch decorator to override the behavior of call
+
+
+2. Custom model
+2.1. User (not superuser)
+# https://docs.djangoproject.com/en/3.2/topics/auth/customizing/
+# from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+=== Create a custom User model for our app that use "email" as username instead of Django's
+    default "username"
+
+!!! UserManager class will provide helpers to create app's user and superuser => When having a custom user we need to
+    override those base helpers too
+    - Override "create_user" function of BaseUserManager
+
+!!! Our custom User model will inherit "AbstractBaseUser" and "PermissionsMixin" to have all the feature from Django's
+    user model
+    - Declare our User's fields
+    - Make sure "objects" is our custom UserManager class as well
+    - Override custom User "USERNAME" as our email
+
+!!! AUTH_USER_MODEL in settings.py need to point to our custom User model
+
+!!! To create the superuser we also need to add create function to our custom UserManager model
+    # is_superuser is PermissionsMixin's field
+
+2.2. Admin
+# https://docs.djangoproject.com/en/3.2/ref/contrib/admin/
+# from django.contrib import admin
+# from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
+=== When User is customized, admin user will also need to be customized to apply that custom User model
+
+** admin.site.register({our custom User model}, {our custom UserAdmin})
+
+*** Todo
+4/11: Review the custom user and admin again once
