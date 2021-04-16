@@ -40,6 +40,9 @@
 !!! To create the superuser we also need to add create function to our custom UserManager model
     # is_superuser is PermissionsMixin's field
 
+!! get_user_model() method from django.contrib.auth will return the custom user model we just created if we register it
+    in the app's settings
+
 2.2. Admin
 # https://docs.djangoproject.com/en/3.2/ref/contrib/admin/
 # from django.contrib import admin
@@ -47,7 +50,23 @@
 
 === When User is customized, admin user will also need to be customized to apply that custom User model
 
+3. API
+3.1. User
+!!! rest_framework serializers defined some Serializers class for us to inherit so that the response we made are parsed
+    in JSON
+    - Our serializer (UserSerializer) for custom user class will inherit ModelSerializer
+        !! ModelSerializer will have a "Meta" class to specify which field will be parsed to json in our response and
+            which model the serializer is referring to
+        # https://www.django-rest-framework.org/api-guide/serializers/#modelserializer
+    - We will also want to override the create function to have the right validation behavior
+
+!!! After creating the serializer, use rest_framework generics.CreateAPIView with serializer_class as the
+    UserSerializer we just create. With this rest_framework will create that create user view for us
 ** admin.site.register({our custom User model}, {our custom UserAdmin})
+
+3.2. Token
+!!! Create an AuthTokenSerializer inherit rest_framework Serializer, and have its validate function override and
+    create CreateTokenView inherit ObtainAuthToken with that serializer we just create
 
 *** Todo
 4/11: Review the custom user and admin again once
