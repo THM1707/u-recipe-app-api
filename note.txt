@@ -68,5 +68,11 @@
 !!! Create an AuthTokenSerializer inherit rest_framework Serializer, and have its validate function override and
     create CreateTokenView inherit ObtainAuthToken with that serializer we just create
 
-*** Todo
-4/11: Review the custom user and admin again once
+*** Commands
+- test: docker-compose run --rm app sh -c "python manage.py test"
+- migrate: docker-compose run --rm app sh -c "python manage.py makemigrations core"
+
+
+################# Learning queue ###################
+1. Read about docker-compose
+2. Django (?), django-rest-framework authentication methods
