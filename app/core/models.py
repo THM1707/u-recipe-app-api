@@ -5,13 +5,6 @@ import uuid
 import os
 
 
-def recipe_image_file_path(instance, filename):
-    """Generate file path for new recipe image"""
-    ext = filename.split('.')[-1]
-    filename = f'{uuid.uuid4()}.{ext}'
-    return os.path.join('uploads/recipe/', filename)
-
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         """Create the user and save to DB"""
@@ -69,6 +62,13 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+    return os.path.join('uploads/recipe/', filename)
 
 
 class Recipe(models.Model):
